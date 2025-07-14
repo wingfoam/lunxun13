@@ -1,8 +1,8 @@
-# gemini-proxy-panel
+# JimiHub
 
 ## 简介
 
-`gemini-proxy-panel` 是一个代理服务。它可以将 OpenAI API 格式的请求转发给 Google Gemini Pro API，使得为 OpenAI 开发的应用能够无缝切换或利用 Gemini 模型的能力。
+`JimiHub` 是一个代理服务。它可以将 OpenAI API 格式的请求转发给 Google Gemini Pro API，使得为 OpenAI 开发的应用能够无缝切换或利用 Gemini 模型的能力。
 
 ## 功能
 
@@ -44,7 +44,7 @@
    * 将文件名设置为 `Dockerfile`。
    * 将以下内容粘贴到文件中：
      ```dockerfile
-     FROM dreamhartley705/gemini-proxy-panel:huggingface
+     FROM dreamhartley705/jimihub:huggingface
      ```
    * 点击 "Commit new file"。
 5. **启动和访问**:
@@ -62,8 +62,8 @@
 1. **克隆仓库**:
     
     ```bash
-    git clone https://github.com/dreamhartley/gemini-proxy-panel.git
-    cd gemini-proxy-panel
+    git clone https://github.com/dreamhartley/JimiHub.git
+    cd JimiHub
     ```
 2. **安装依赖**:
     
@@ -101,8 +101,8 @@
 1. **克隆仓库**:
     
     ```bash
-    git clone https://github.com/dreamhartley/gemini-proxy-panel.git
-    cd gemini-proxy-panel
+    git clone https://github.com/dreamhartley/JimiHub.git
+    cd JimiHub
     ```
 2. **配置环境变量**:
     
@@ -114,20 +114,20 @@
 3. **构建 Docker 镜像**:
     
     ```bash
-    docker build -t gemini-proxy-panel .
+    docker build -t gemhub .
     ```
 4. **运行 Docker 容器**:
     
     ```bash
-    docker run -d --name gemini-proxy-panel \
+    docker run -d --name gemhub \
       -p 3000:3000 \
       --env-file .env \
       -v ./data:/usr/src/app/data \
-      gemini-proxy-panel
+      gemhub
     ```
     
     * `-d`: 后台运行容器。
-    * `--name gemini-proxy-panel`: 给容器命名。
+    * `--name gemhub`: 给容器命名。
     * `-p 3000:3000`: 将主机的 3000 端口映射到容器的 3000 端口。
     * `--env-file .env`: 从 `.env` 文件加载环境变量。
     * `-v ./data:/usr/src/app/data`: 将本地的 `data` 目录挂载到容器内，用于持久化 SQLite 数据库。请确保本地存在 `data` 目录。
@@ -137,8 +137,8 @@
 1. **克隆仓库**:
    
    ```bash
-   git clone https://github.com/dreamhartley/gemini-proxy-panel.git
-   cd gemini-proxy-panel
+   git clone https://github.com/dreamhartley/JimiHub.git
+   cd JimiHub
    ```
 2. **配置环境变量**:
    

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Gemini Proxy Panel管理脚本
+# JimiHub管理脚本
 # 版本: 1.0
 
 # 定义颜色
@@ -11,19 +11,19 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # 定义路径
-INSTALL_DIR="/opt/gemini-proxy-panel"
-SCRIPT_PATH="/usr/local/bin/gpanel"
+INSTALL_DIR="/opt/jimihub"
+SCRIPT_PATH="/usr/local/bin/jimihub"
 
 # 显示ASCII图案
 show_ascii() {
     echo -e "${BLUE}"
     cat << 'EOF'
-  ██████╗ ██████╗  █████╗ ███╗   ██╗███████╗██╗   
- ██╔════╝ ██╔══██╗██╔══██╗████╗  ██║██╔════╝██║   
- ██║  ███╗██████╔╝███████║██╔██╗ ██║█████╗  ██║   
- ██║   ██║██╔═══╝ ██╔══██║██║╚██╗██║██╔══╝  ██║   
- ╚██████╔╝██║     ██║  ██║██║ ╚████║███████╗███████╗
-  ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+      ██╗██╗███╗   ███╗██╗██╗  ██╗██╗   ██╗██████╗ 
+      ██║██║████╗ ████║██║██║  ██║██║   ██║██╔══██╗
+      ██║██║██╔████╔██║██║███████║██║   ██║██████╔╝
+ ██   ██║██║██║╚██╔╝██║██║██╔══██║██║   ██║██╔══██╗
+ ╚█████╔╝██║██║ ╚═╝ ██║██║██║  ██║╚██████╔╝██████╔╝
+  ╚════╝ ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ 
 EOF
     echo -e "${NC}"
 }
@@ -32,7 +32,7 @@ EOF
 show_welcome() {
     clear
     show_ascii
-    echo -e "${GREEN}欢迎使用Gemini Proxy Panel管理脚本${NC}"
+    echo -e "${GREEN}欢迎使用JimiHub管理脚本${NC}"
     echo -e "${YELLOW}================================================${NC}"
     echo ""
 }
@@ -48,10 +48,10 @@ check_root() {
 # 检查安装状态
 check_install_status() {
     if [ -d "$INSTALL_DIR" ] && [ -f "$INSTALL_DIR/docker-compose.yml" ]; then
-        echo -e "${GREEN}✓ Gemini Proxy Panel已安装${NC}"
+        echo -e "${GREEN}✓ JimiHub已安装${NC}"
         INSTALLED=true
     else
-        echo -e "${RED}✗ Gemini Proxy Panel未安装${NC}"
+        echo -e "${RED}✗ JimiHub未安装${NC}"
         INSTALLED=false
     fi
 }
@@ -59,7 +59,7 @@ check_install_status() {
 # 检查容器运行状态
 check_container_status() {
     if [ "$INSTALLED" = true ]; then
-        if docker ps | grep -q "gemini-proxy-panel"; then
+        if docker ps | grep -q "jimihub"; then
             echo -e "${GREEN}✓ 容器正在运行${NC}"
             RUNNING=true
             show_access_url
@@ -214,8 +214,8 @@ create_docker_compose() {
 version: '3.8'
 services:
   app:
-    image: dreamhartley705/gemini-proxy-panel:latest
-    container_name: gemini-proxy-panel
+    image: dreamhartley705/jimihub:latest
+    container_name: jimihub
     ports:
       - "$PORTS_MAPPING"
     env_file:
@@ -226,9 +226,9 @@ services:
 EOF
 }
 
-# 安装Gemini Proxy Panel
+# 安装JimiHub
 install_gemini_proxy_panel() {
-    echo -e "${YELLOW}开始安装Gemini Proxy Panel...${NC}"
+    echo -e "${YELLOW}开始安装JimiHub...${NC}"
     
     # 安装依赖
     install_dependencies
@@ -259,7 +259,7 @@ install_gemini_proxy_panel() {
     # 等待容器启动
     sleep 5
     
-    if docker ps | grep -q "gemini-proxy-panel"; then
+    if docker ps | grep -q "jimihub"; then
         echo -e "${GREEN}✓ 安装完成！${NC}"
         echo ""
         
@@ -287,7 +287,7 @@ start_container() {
         if check_docker_compose; then
             $DOCKER_COMPOSE_CMD up -d
             sleep 3
-            if docker ps | grep -q "gemini-proxy-panel"; then
+            if docker ps | grep -q "jimihub"; then
                 echo -e "${GREEN}✓ 容器启动成功${NC}"
             else
                 echo -e "${RED}✗ 容器启动失败${NC}"
@@ -296,7 +296,7 @@ start_container() {
             echo -e "${RED}Docker Compose未找到${NC}"
         fi
     else
-        echo -e "${RED}请先安装Gemini Proxy Panel${NC}"
+        echo -e "${RED}请先安装JimiHub${NC}"
     fi
 }
 
@@ -312,7 +312,7 @@ stop_container() {
             echo -e "${RED}Docker Compose未找到${NC}"
         fi
     else
-        echo -e "${RED}请先安装Gemini Proxy Panel${NC}"
+        echo -e "${RED}请先安装JimiHub${NC}"
     fi
 }
 
@@ -324,7 +324,7 @@ restart_container() {
         if check_docker_compose; then
             $DOCKER_COMPOSE_CMD restart
             sleep 3
-            if docker ps | grep -q "gemini-proxy-panel"; then
+            if docker ps | grep -q "jimihub"; then
                 echo -e "${GREEN}✓ 容器重启成功${NC}"
             else
                 echo -e "${RED}✗ 容器重启失败${NC}"
@@ -333,8 +333,58 @@ restart_container() {
             echo -e "${RED}Docker Compose未找到${NC}"
         fi
     else
-        echo -e "${RED}请先安装Gemini Proxy Panel${NC}"
+        echo -e "${RED}请先安装JimiHub${NC}"
     fi
+}
+
+# 卸载JimiHub
+uninstall_jimihub() {
+    if [ "$INSTALLED" = false ]; then
+        echo -e "${RED}JimiHub未安装，无需卸载${NC}"
+        return
+    fi
+
+    echo -e "${YELLOW}开始卸载JimiHub...${NC}"
+    cd "$INSTALL_DIR"
+    if check_docker_compose; then
+        echo "正在停止并删除JimiHub容器..."
+        $DOCKER_COMPOSE_CMD down --volumes
+    fi
+
+    echo "正在删除安装目录..."
+    rm -rf "$INSTALL_DIR"
+
+    echo -n "是否要卸载Docker? (y/n) [默认: n]: "
+    read -r uninstall_docker
+    uninstall_docker=${uninstall_docker:-n}
+
+    if [[ "$uninstall_docker" == "y" || "$uninstall_docker" == "Y" ]]; then
+        # 检查是否还有其他Docker容器
+        if [ -n "$(docker ps -aq)" ]; then
+            echo -e "${YELLOW}警告：检测到系统上存在其他Docker容器。为避免影响其他应用，Docker未被卸载。${NC}"
+            echo -e "${GREEN}✓ JimiHub容器和数据已删除。${NC}"
+        else
+            echo "正在卸载Docker..."
+            if command -v apt-get &> /dev/null; then
+                apt-get purge -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+                apt-get autoremove -y --purge
+                rm -rf /var/lib/docker /etc/docker
+            elif command -v yum &> /dev/null; then
+                yum remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+                rm -rf /var/lib/docker /var/lib/containerd
+            elif command -v dnf &> /dev/null; then
+                dnf remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+                rm -rf /var/lib/docker /var/lib/containerd
+            fi
+            echo -e "${GREEN}✓ Docker卸载完成。${NC}"
+        fi
+    else
+        echo -e "${GREEN}✓ JimiHub容器和数据已删除。${NC}"
+    fi
+
+    unregister_command
+    echo -e "${GREEN}✓ JimiHub卸载完成！感谢使用！${NC}"
+    exit 0
 }
 
 # 注册系统命令
@@ -342,26 +392,44 @@ register_command() {
     if [ ! -f "$SCRIPT_PATH" ]; then
         cp "$0" "$SCRIPT_PATH"
         chmod +x "$SCRIPT_PATH"
-        echo -e "${GREEN}✓ 已注册系统命令 'gpanel'${NC}"
+        echo -e "${GREEN}✓ 已注册系统命令 'jimihub'${NC}"
     fi
 }
+
+# 注销系统命令
+unregister_command() {
+    if [ -f "$SCRIPT_PATH" ]; then
+        rm -f "$SCRIPT_PATH"
+        echo -e "${GREEN}✓ 已注销系统命令 'jimihub'${NC}"
+    fi
+}
+
 
 # 显示菜单
 show_menu() {
     echo ""
     echo -e "${YELLOW}请选择操作:${NC}"
-    echo "1. 安装 Gemini Proxy Panel"
-    echo "2. 启动 Gemini Proxy Panel 容器"
-    echo "3. 停止 Gemini Proxy Panel 容器"
-    echo "4. 重启 Gemini Proxy Panel 容器"
+    echo "1. 安装 JimiHub"
+    echo "2. 启动 JimiHub 容器"
+    echo "3. 停止 JimiHub 容器"
+    echo "4. 重启 JimiHub 容器"
+    echo "5. 卸载 JimiHub"
     echo "0. 退出"
     echo ""
-    echo -n "请输入选项 [0-4]: "
+    echo -n "请输入选项 [0-5]: "
 }
 
 # 主函数
 main() {
     check_root
+    
+    # 如果是卸载命令，直接执行
+    if [[ "$1" == "uninstall" ]]; then
+        check_install_status
+        uninstall_jimihub
+        exit 0
+    fi
+
     register_command
     
     while true; do
@@ -396,9 +464,12 @@ main() {
                 echo -n "按回车键继续..."
                 read -r
                 ;;
+            5)
+                uninstall_jimihub
+                ;;
             0)
                 echo -e "${GREEN}感谢使用！${NC}"
-                echo -e "${BLUE}提示：下次可以直接使用 'gpanel' 命令进入管理脚本${NC}"
+                echo -e "${BLUE}提示：下次可以直接使用 'jimihub' 命令进入管理脚本${NC}"
                 exit 0
                 ;;
             *)
